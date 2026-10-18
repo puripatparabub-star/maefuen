@@ -67,9 +67,13 @@ export async function onRequestPost({ request, env }) {
   if (!key) return json(503, { error: 'ยังไม่ได้ตั้งค่า TYPHOON_API_KEY' });
   try {
     if (task === 'chat') {
-      // โหมดยืดหยุ่นและโหมดคุยอิสระ ใช้ได้เมื่อมีรหัสผู้ดูแลเท่านั้น
-      if (!env.ADMIN_PIN || String(body.pin || '') !== env.ADMIN_PIN) return json(401, { ok: false, error: 'ต้องใช้รหัสผู้ดูแล' });
-      const mode = body.mode === 'free' ? 'free' : 'flex';
+      // โหมดคุย กำหนดจากค่ากลางใน KV (ผู้ดูแลตั้งครั้งเดียวมีผลทุกเครื่อง) เซิร์ฟเวอร์เป็นคนตัดสิน ไม่เชื่อค่าจากหน้าเว็บ
+      let gMode = 'strict';
+      if (env.MAEFUEN_KV) { try { const cfg = await env.MAEFUEN_KV.get('config', 'json'); if (cfg && cfg.chatMode) gMode = cfg.chatMode; } catch (e) {} }
+      let mode;
+      if (gMode === 'flex' || gMode === 'free') mode = gMode;
+      else if (env.ADMIN_PIN && String(body.pin || '') === env.ADMIN_PIN && !env.MAEFUEN_KV) mode = body.mode === 'free' ? 'free' : 'flex'; // สำรอง: ยังไม่ได้ผูก KV ใช้รหัสผู้ดูแลเป็นรายแท็บ
+      else return json(403, { ok: false, error: 'โหมดคุยอิสระปิดอยู่', mode: 'strict' });
       const history = (Array.isArray(body.history) ? body.history : []).slice(-8).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: stripPII(clip(m.content, 600)) }));
       const topics = (Array.isArray(body.topics) ? body.topics : []).slice(0, 30).map(t => clip(t.t, 60)).join(', ');
       const system = mode === 'free' ? 'ตอบเป็นภาษาไทยอย่างสุภาพ ลงท้ายแบบผู้หญิงด้วยค่ะ' : 'คุณคือผู้ช่วยของแม่หลังคลอดชื่อแม่ฟื้น พูดสุภาพแบบผู้หญิง ลงท้ายด้วยค่ะหรือนะคะ คุยเรื่องทั่วไปและให้กำลังใจได้ ตอบสั้นไม่เกิน 4 ประโยค เรื่องสุขภาพให้ตอบเฉพาะความรู้ทั่วไปเกี่ยวกับการดูแลหลังคลอดและการแพทย์แผนไทย โดยอิงหัวข้อที่ให้ ห้ามวินิจฉัยโรค ห้ามแนะนำยา สมุนไพรสำหรับกิน หรือขนาดยา ห้ามแนะนำให้หยุดยา ถ้าถามเรื่องยาหรืออาการผิดปกติ ให้แนะนำปรึกษาแพทย์แผนไทยประจำเคสในแชตนี้ ถ้าฉุกเฉินให้โทร 1669 ถ้าไม่แน่ใจให้บอกตรง ๆ ว่าไม่แน่ใจ' + ' หัวข้อความรู้ที่มี: ' + topics;
