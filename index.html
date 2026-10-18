@@ -690,13 +690,24 @@ async function aiCall(task, payload){
   const r = await aiCall('ping');
   if (r && r.ok) { aiBackend = 'typhoon'; aiMode = true; $('#modeDot').classList.add('on'); $('#modeDot').title = 'AI: Typhoon (' + r.model + ')'; toast('เชื่อม AI (Typhoon) แล้ว'); }
 })();
-/* ---------- chat modes (admin, per browser tab): strict = prototype filter, flex = flexible filter, free = chat anything ---------- */
+/* ---------- chat modes (admin sets it centrally in KV for every device; per-tab only when no central store): strict = prototype filter, flex = flexible filter, free = chat anything ---------- */
 let chatMode = 'strict', chatHist = [];
 try { const m = sessionStorage.getItem('maefuen-chatmode'); if (m === 'flex' || m === 'free') chatMode = m; } catch(e) {}
 const MODE_TH = {strict: 'กรองแบบต้นแบบ', flex: 'กรองแบบยืดหยุ่น', free: 'คุยได้ทุกอย่าง · ทดสอบ'};
 function adminPin(){ try { return localStorage.getItem('maefuen-admin-pin') || ''; } catch(e) { return ''; } }
 function showModeTag(){ const t = $('#modeTag'); if (!t) return; t.className = 'mode-tag' + (chatMode === 'strict' ? ' hidden' : chatMode === 'free' ? ' free' : ''); t.textContent = MODE_TH[chatMode]; }
 async function setChatMode(mode, pinArg){
+  if (REMOTE && remoteCfg && remoteCfg.persist) {            // central: one command changes every device
+    const pin = pinArg || adminPin();
+    if (!pin) { toast(`พิมพ์ /maefuen-${mode} เว้นวรรค แล้วตามด้วยรหัสผู้ดูแล`); return; }
+    let r, d = {};
+    try { r = await fetch(API + '/config', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin, chatMode: mode})}); d = await r.json(); } catch(e) {}
+    if (!r || !r.ok) { if (r && r.status === 401) { try { localStorage.removeItem('maefuen-admin-pin'); } catch(e) {} } toast(d.error || 'เปลี่ยนโหมดไม่สำเร็จ ลองใหม่อีกครั้ง'); return; }
+    try { localStorage.setItem('maefuen-admin-pin', pin); } catch(e) {}
+    remoteCfg = d; chatMode = mode; chatHist = []; showModeTag();
+    toast(({strict: 'กลับไปใช้ระบบกรองแบบต้นแบบ', flex: 'เปิดโหมดกรองแบบยืดหยุ่น', free: 'เปิดโหมดคุยได้ทุกอย่าง (ทดสอบ)'})[mode] + ' ทุกเครื่อง เครื่องอื่นจะเปลี่ยนภายใน 20 วินาที');
+    return;
+  }
   if (mode === 'strict') { chatMode = 'strict'; chatHist = []; try { sessionStorage.setItem('maefuen-chatmode', 'strict'); } catch(e) {} showModeTag(); toast('กลับไปใช้ระบบกรองแบบต้นแบบ (แท็บนี้)'); return; }
   if (aiBackend !== 'typhoon') { toast('โหมดนี้ต้องเปิดจากเว็บที่เชื่อม Typhoon แล้ว (พิมพ์ /maefuen-check เพื่อตรวจ)'); return; }
   const pin = pinArg || adminPin();
@@ -860,6 +871,7 @@ async function pollConfig(){
     if (!r.ok) return null;
     const c = await r.json(); remoteCfg = c;
     setLock(!!c.disabled);
+    if (c.persist && ['strict', 'flex', 'free'].includes(c.chatMode) && c.chatMode !== chatMode) { chatMode = c.chatMode; chatHist = []; showModeTag(); }
     if (typeof c.missions === 'boolean' && c.missions !== missionsOn) { missionsOn = c.missions; applyMissionUI(); if (typeof updateMeta === 'function') updateMeta(); }
     return c;
   } catch(e) { return null; }
@@ -1462,7 +1474,7 @@ $('#composer').addEventListener('submit', e => {
   if (c0 === '/maefuen-flex') { setChatMode('flex', parts[1]); return; }
   if (c0 === '/maefuen-free') { setChatMode('free', parts[1]); return; }
   if (c0 === '/maefuen-reset') { resetDevice(); toast('รีเซ็ตทุกอย่างบนเครื่องนี้แล้ว: ล้างข้อมูล กลับระบบกรองแบบต้นแบบ ลบรหัสผู้ดูแล'); return; }
-  if (c0 === '/maefuen-reset-all') { (async () => { const pin = parts[1] || adminPin(); if (remoteCfg && pin) { try { await fetch(API + '/config', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin, missions: false, disabled: false})}); } catch(e) {} } try { localStorage.removeItem('maefuen-disabled'); } catch(e) {} setLock(false); resetDevice(); await pollConfig(); applyMissionUI(); toast('รีเซ็ตทุกอย่างแล้ว: ทุกเครื่องซ่อนภารกิจ และเครื่องนี้กลับค่าเริ่มต้น'); })(); return; }
+  if (c0 === '/maefuen-reset-all') { (async () => { const pin = parts[1] || adminPin(); if (remoteCfg && pin) { try { await fetch(API + '/config', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin, missions: false, disabled: false, chatMode: 'strict'})}); } catch(e) {} } try { localStorage.removeItem('maefuen-disabled'); } catch(e) {} setLock(false); resetDevice(); await pollConfig(); applyMissionUI(); toast('รีเซ็ตทุกอย่างแล้ว: ทุกเครื่องซ่อนภารกิจและกลับโหมดต้นแบบ และเครื่องนี้กลับค่าเริ่มต้น'); })(); return; }
   if (c0 === '/maefuen-mission-on' || c0 === '/maefuen-mission-off') { remoteMissions(c0.endsWith('-on'), parts[1]); return; }
   if (cmd === '/maefuen-admin-forget') { try { localStorage.removeItem('maefuen-admin-pin'); } catch(e) {} toast('ลบรหัสผู้ดูแลออกจากเครื่องนี้แล้ว'); return; }
   if (cmd === '/maefuen-hide') { $('#diagPanel').classList.add('hidden'); toast('ซ่อนแผงตรวจแล้ว'); return; }
@@ -1482,7 +1494,7 @@ async function runDiag(){
     if (!c) row('⚠️', 'ระบบควบคุมกลาง (เปิด/ซ่อนภารกิจ)', 'ไม่พบฟังก์ชัน config', (HOST === 'Cloudflare' ? 'อัปโหลด <code>functions/api/config.js</code> แล้ว deploy ใหม่' : 'อัปโหลด <code>netlify/functions/config.js</code> และ <code>package.json</code> แล้ว deploy'));
     else if (!c.persist) row('⚠️', 'ระบบควบคุมกลาง', 'ที่เก็บค่ากลางใช้ไม่ได้', HOST === 'Cloudflare' ? 'สร้าง KV namespace แล้วผูกกับโปรเจกต์ที่ Settings → Bindings ชื่อตัวแปร <code>MAEFUEN_KV</code> แล้ว deploy ใหม่' : 'ตรวจว่ามี <code>package.json</code> ที่โฟลเดอร์หลักของ repo แล้ว Trigger deploy');
     else if (!c.adminReady) row('⚠️', 'ระบบควบคุมกลาง', 'ยังไม่ได้ตั้งรหัสผู้ดูแล', (HOST === 'Cloudflare' ? 'Cloudflare → Settings → Variables and Secrets → เพิ่ม <code>ADMIN_PIN</code> แบบ Secret แล้ว deploy ใหม่' : 'Netlify → Environment variables → เพิ่ม <code>ADMIN_PIN</code> แล้ว Trigger deploy'));
-    else row('✅', 'ระบบควบคุมกลางพร้อม', `ภารกิจตอนนี้: <b>${c.missions ? 'เปิด' : 'ซ่อน'}</b> ทุกเครื่อง${c.updatedAt ? ' · เปลี่ยนล่าสุด ' + esc(new Date(c.updatedAt).toLocaleString('th-TH')) : ''}`); }
+    else row('✅', 'ระบบควบคุมกลางพร้อม', `ภารกิจ: <b>${c.missions ? 'เปิด' : 'ซ่อน'}</b> · โหมดแชต: <b>${esc(MODE_TH[c.chatMode] || MODE_TH.strict)}</b> (ทุกเครื่อง)${c.updatedAt ? ' · เปลี่ยนล่าสุด ' + esc(new Date(c.updatedAt).toLocaleString('th-TH')) : ''}`); }
   if (!/^https?:/.test(location.protocol) || onClaude) {
     row('❌', 'ที่นี่ไม่มีระบบหลังบ้าน', 'Typhoon ทำงานได้เฉพาะเว็บที่ติดตั้งบน Cloudflare Pages (หรือ Netlify) พร้อมฟังก์ชันหลังบ้าน', 'เปิดลิงก์ <code>….pages.dev</code> ของทีมแทน');
     row(sample ? '✅' : 'ℹ️', 'AI สำรองของ Claude', sample ? 'ใช้ได้ พิมพ์ /maefuen-ai เพื่อเปิด' : 'ไม่มีในหน้านี้');
