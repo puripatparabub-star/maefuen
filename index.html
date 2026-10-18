@@ -113,7 +113,7 @@ h3{font-size:0.9375rem;margin:0 0 6px;font-weight:600}
 .composer{display:flex;gap:6px;padding:8px;background:var(--surface);border-top:1px solid var(--line)}
 .composer input{flex:1;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:var(--surface-2);min-width:0}
 .composer button{border:0;border-radius:999px;background:var(--line-green-strong);color:#fff;padding:8px 14px;font-weight:600}
-.richmenu{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-top:1px solid var(--line)}
+.richmenu{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:var(--surface);border-top:1px solid var(--line)}
 .richmenu button{border:0;background:transparent;padding:10px 4px;font-size:0.75rem;line-height:1.3;border-right:1px solid var(--line);color:var(--ink)}
 .richmenu button:last-child{border-right:0}
 .richmenu button span{display:block;font-size:1.125rem;margin-bottom:2px}
@@ -127,6 +127,10 @@ h3{font-size:0.9375rem;margin:0 0 6px;font-weight:600}
 .libq{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:8px 10px;margin-bottom:6px;font-size:0.84375rem;line-height:1.45}
 .libq:hover{border-color:var(--indigo)}
 .cite{display:block;margin-top:6px;font-size:0.75rem;color:var(--muted)}
+.src{margin-top:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);font-size:.8125rem;color:var(--ink)}
+.src summary{cursor:pointer;padding:8px 10px;min-height:36px;font-weight:600;list-style-position:inside}
+.src[open] summary{border-bottom:1px solid var(--line)}
+.src > div{padding:8px 10px;line-height:1.55}
 .lv{display:inline-block;border-radius:999px;padding:0 8px;font-size:0.71875rem;font-weight:600;margin:4px 4px 0 0}
 .lv.text{background:var(--indigo-soft);color:var(--indigo)}
 .lv.community{background:var(--turmeric-soft);color:var(--warn)}
@@ -310,6 +314,31 @@ body.demo-on main{padding-bottom:120px}
 .inbox-empty{margin:0 0 12px}
 .trace-jump{min-height:44px}
 .barrow{grid-template-columns:minmax(0,150px) minmax(0,1fr) auto}
+.diag{position:fixed;right:16px;top:84px;bottom:16px;width:min(460px,calc(100vw - 32px));z-index:60;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.45);display:flex;flex-direction:column;overflow:hidden}
+@media (max-width:700px){.diag{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto;left:8px;right:8px;width:auto;max-height:48vh}}
+.diag-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bar);color:var(--bar-ink)}
+.diag-h button{background:none;border:0;color:inherit;font-size:1.25rem;min-width:44px;min-height:44px}
+.diag-sum{padding:12px 16px;font-weight:700;border-bottom:1px solid var(--line)}
+.diag-sum.ok{background:var(--ok-soft);color:var(--ok)}.diag-sum.bad{background:var(--bad-soft);color:var(--bad)}.diag-sum.warn{background:var(--warn-soft);color:var(--warn)}
+.diag-list{list-style:none;margin:0;padding:8px 16px;overflow:auto;flex:1}
+.diag-list li{padding:10px 0;border-bottom:1px solid var(--line);font-size:.875rem}
+.diag-list li b{display:block;font-size:.9375rem}
+.diag-list .how{display:block;margin-top:4px;color:var(--muted)}
+.diag-list code{background:var(--surface-2);padding:1px 5px;border-radius:4px;word-break:break-all}
+.diag-f{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--line);font-size:.8125rem;color:var(--muted)}
+.mcard b.mt{display:block;font-size:1rem}
+.mbar{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin:6px 0 4px}
+.mbar i{display:block;height:100%;background:var(--ok)}
+.mtask{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.mtask .tx{flex:1;line-height:1.5}
+.mtask button{flex:none;min-height:36px;border:1px solid var(--line-green-strong);background:var(--surface);color:var(--line-green-strong);border-radius:999px;padding:4px 12px;font-size:.8125rem;font-weight:600}
+.mtask.done .tx{color:var(--muted);text-decoration:line-through}
+.mtask.done button{background:var(--line-green-strong);color:#fff}
+.mwarn{font-size:.8125rem;color:var(--muted);margin-top:6px}
+.otp-sms{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin:0 0 10px;font-size:.8125rem;color:var(--muted)}
+.otp-sms:empty{display:none}
+.otp-sms b{font-size:1.375rem;letter-spacing:.25em;color:var(--ink)}
+.otp-sms button{margin-left:auto;min-height:44px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 14px}
 .hidden{display:none !important}
 .clock{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--indigo-soft);border-radius:999px;padding:4px 6px 4px 12px;font-size:0.84375rem}
 .clock b{color:var(--indigo)}
@@ -378,7 +407,7 @@ body.demo-on main{padding-bottom:120px}
           <h3>ลงทะเบียนรับบริการหลังคลอด</h3>
           <div id="regA">
             <p class="note" style="margin:0 0 8px">ขั้นที่ 1 จาก 2 · ยืนยันตัวตน (เลือก 1 วิธี)</p>
-            <label class="consent"><input type="checkbox" id="rConsent" style="accent-color:var(--indigo)"> ยินยอมให้หน่วยบริการใช้ข้อมูลการคลอดและข้อมูลสุขภาพ เพื่อดูแลหลังคลอดและติดตามผล ตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล ยกเลิกได้ทุกเมื่อ <span style="display:block;font-size:.8125rem;color:var(--muted);margin-top:4px">ข้อความที่พิมพ์ผ่าน LINE จะผ่านระบบของ LINE และระบบอาจใช้ AI (Typhoon) ช่วยอ่านอาการ โดยตัดชื่อ เลขบัตร และเบอร์โทรออกก่อน AI ไม่ตัดสินแทนแพทย์</span></label>
+            <label class="consent"><input type="checkbox" id="rConsent" style="accent-color:var(--indigo)"> <span>ยินยอมให้หน่วยบริการใช้ข้อมูลการคลอดและข้อมูลสุขภาพ เพื่อดูแลหลังคลอดและติดตามผล ตาม พ.ร.บ.คุ้มครองข้อมูลส่วนบุคคล ยกเลิกได้ทุกเมื่อ <span style="display:block;font-size:.8125rem;color:var(--muted);margin-top:4px">ข้อความที่พิมพ์ผ่าน LINE จะผ่านระบบของ LINE และระบบอาจใช้ AI (Typhoon) ช่วยอ่านอาการ โดยตัดชื่อ เลขบัตร และเบอร์โทรออกก่อน AI ไม่ตัดสินแทนแพทย์</span></span></label>
             <div class="field" style="margin-top:8px"><label for="rScenario">(สำหรับสาธิต) ข้อมูลที่ระบบจะดึงได้</label><select id="rScenario"><option value="cs14">ผ่าตัดคลอด 14 วันก่อน · บัตรทอง</option><option value="n5">คลอดปกติ 5 วันก่อน · บัตรทอง</option><option value="sso">คลอดปกติ 6 วันก่อน · ประกันสังคม</option></select></div>
             <div class="auth-list" id="authList">
               <button class="auth-opt main" data-m="qr" type="button"><b>สแกน QR จากพยาบาล</b><span>ก่อนออกจากโรงพยาบาล · ไม่ต้องพิมพ์อะไรเลย</span></button>
@@ -396,6 +425,7 @@ body.demo-on main{padding-bottom:120px}
             </div>
             <div class="auth-pane hidden" id="authOTP">
               <p class="note" style="margin:0 0 6px">ส่งรหัส 6 หลักไปที่เบอร์ <b>08x-xxx-12xx</b> ที่ให้ไว้กับโรงพยาบาลแล้ว</p>
+              <div class="otp-sms" id="otpSms" role="status"></div>
               <div class="field"><label for="otpIn">รหัส OTP</label><input id="otpIn" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code"></div>
               <button class="btn btn-primary" id="otpOk" type="button" style="width:100%">ยืนยันรหัส</button>
             </div>
@@ -428,6 +458,7 @@ body.demo-on main{padding-bottom:120px}
         <button data-act="me"><span aria-hidden="true">🎫</span><em id="rmMe" style="font-style:normal">ลงทะเบียน</em></button>
         <button data-act="sick"><span aria-hidden="true">🩺</span>ไม่สบายตรงไหน</button>
         <button data-act="today"><span aria-hidden="true">☀️</span>วันนี้เป็นยังไง</button>
+        <button data-act="mission"><span aria-hidden="true">✅</span>ภารกิจวันนี้</button>
         <button data-act="faq"><span aria-hidden="true">💬</span>ถามบ่อย</button>
       </div>
     </div>
@@ -586,6 +617,12 @@ body.demo-on main{padding-bottom:120px}
   </div>
 </section>
 </main>
+<aside class="diag hidden" id="diagPanel" role="dialog" aria-modal="false" aria-labelledby="diagTitle">
+  <div class="diag-h"><b id="diagTitle">ตรวจการเชื่อมต่อ AI (Typhoon)</b><button type="button" id="diagClose" aria-label="ปิดแผงตรวจ">✕</button></div>
+  <div class="diag-sum" id="diagSum">กำลังตรวจ…</div>
+  <ol class="diag-list" id="diagList"></ol>
+  <div class="diag-f"><button type="button" class="btn" id="diagRerun">ตรวจอีกครั้ง</button><span>พิมพ์ <code>/maefuen-hide</code> ในแชตเพื่อซ่อน</span></div>
+</aside>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <footer>ต้นแบบเพื่อการแข่งขัน Thai Traditional Medicine Digital Health &amp; AI Hackathon 2026 ไม่ใช่เครื่องมือทางการแพทย์ ข้อห้ามอ้างอิงคู่มือแนวทางการดูแลสุขภาพมารดาและทารกด้วยการแพทย์แผนไทย กรมการแพทย์แผนไทยและการแพทย์ทางเลือก</footer>
 
@@ -615,13 +652,18 @@ const state = { mother:null, events:[], blocks:{}, redflags:0, ai:0, kb:0, visit
 function logEvent(kind, detail){ state.events.unshift({t:clock(), kind, detail}); renderDash(); }
 
 /* ---------- hidden real-AI mode (secret command) ---------- */
-let aiMode = false, sample = null, aiBackend = null, lastUsage = null;
+const API = /netlify\.app$/.test(location.hostname) ? '/.netlify/functions' : '/api';
+const HOST = /netlify\.app$/.test(location.hostname) ? 'Netlify' : 'Cloudflare';
+let aiMode = false, sample = null, aiBackend = null, lastUsage = null, lastAiError = null;
 async function aiCall(task, payload){
   const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 9000);
   try {
-    const res = await fetch('/.netlify/functions/ai', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.assign({task}, payload || {})), signal: ctl.signal});
-    const data = await res.json(); lastUsage = data.usage || null; return res.ok ? data : null;
-  } catch(e) { return null; } finally { clearTimeout(tm); }
+    const res = await fetch(API + '/ai', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.assign({task}, payload || {})), signal: ctl.signal});
+    let data = {}; try { data = await res.json(); } catch(e) {}
+    lastUsage = data.usage || null;
+    if (!res.ok || data.ok === false) lastAiError = {status: data.status || res.status, detail: data.detail || data.error || data.reason || '', at: new Date().toLocaleTimeString('th-TH')};
+    return res.ok ? data : null;
+  } catch(e) { lastAiError = {status: 0, detail: e.name === 'AbortError' ? 'รอเกิน 9 วินาที' : 'เชื่อมต่อระบบหลังบ้านไม่ได้', at: new Date().toLocaleTimeString('th-TH')}; return null; } finally { clearTimeout(tm); }
 }
 (async function detectBackend(){
   if (!/^https?:/.test(location.protocol) || /claude\.ai$/.test(location.hostname)) return;
@@ -712,7 +754,130 @@ $$('.richmenu button').forEach(b => b.addEventListener('click', () => {
   if (a === 'sick') { closeSheets(); me('ไม่สบาย'); bodyPicker(); }
   if (a === 'today') { closeSheets(); me('วันนี้เป็นยังไง'); dailyCheck(true); }
   if (a === 'faq') { closeSheets(); me('ถามบ่อย'); faqAsk(); }
+  if (a === 'mission') { closeSheets(); me('ภารกิจวันนี้'); if (!state.mother) { bot('ลงทะเบียนก่อนนะคะ แล้วเลือกภารกิจฟื้นตัวได้เลย'); openSheet('sheet-register'); return; } if (!state.mother.mission) missionOffer(); else missionCard(); }
 }));
+
+/* ---------- recovery missions (14 / 30 / 42 days) ---------- */
+const MISSION_LEN = [
+  {n:14, label:'14 วัน', short:'ช่วงเสี่ยงที่สุด', why:'2 สัปดาห์แรก ช่วงเสี่ยงที่สุด ตรงกับนัดติดตามวันที่ 7–14 ของ WHO'},
+  {n:30, label:'30 วัน', short:'ครบเดือน', why:'ครบ 1 เดือน ตรงกับการอยู่เดือน และเวลาที่แผลผ่าคลอดพร้อมรับหัตถการ'},
+  {n:42, label:'42 วัน', short:'ครบ 6 สัปดาห์', why:'ครบ 6 สัปดาห์ ซึ่งเป็นระยะหลังคลอดตามนิยามทางการแพทย์'}];
+const CARE = [
+  {i:'😴', t:'งีบหลับตอนลูกหลับอย่างน้อย 1 ครั้ง'},
+  {i:'🍲', t:'กินอาหารครบ 5 หมู่ เพิ่มโปรตีน เช่น ไข่ ปลา', topic:'อาหารหลังคลอด'},
+  {i:'🤱', t:'ให้ลูกดูดนมบ่อย ๆ ทุก 2–3 ชั่วโมง', topic:'น้ำนมน้อย ทำอย่างไรดี'},
+  {i:'♨️', t:'ประคบเต้านมอุ่น 10 นาทีก่อนให้นม', topic:'การนวดเต้านมด้วยตัวเอง'},
+  {i:'🩸', t:'สังเกตน้ำคาวปลา สีควรจางลงเรื่อย ๆ', topic:'น้ำคาวปลา'},
+  {i:'💬', t:'เล่าความรู้สึกให้คนในบ้านฟัง 5 นาที', topic:'อารมณ์หลังคลอด'},
+  {i:'🌿', t:'กินอาหารพื้นบ้านบำรุงน้ำนม เช่น แกงเลียงหัวปลี 1 มื้อ', topic:'น้ำนมน้อย ทำอย่างไรดี'},
+  {i:'🏠', t:'ให้คนในบ้านช่วยงานหนัก งดยกของหนัก', topic:'ทำงานบ้านหลังคลอดได้แค่ไหน'},
+  {i:'🍼', t:'จัดท่าให้นม ให้ลูกงับลึกถึงลานนม', topic:'ท่าให้นมลูก'},
+  {i:'🧘', t:'ยืดคอ ไหล่ และหลังเบา ๆ 5 นาที', topic:'การบริหารร่างกายหลังคลอด'}];
+let missionsOn = false;
+try { missionsOn = localStorage.getItem('maefuen-missions') === 'on'; } catch(e) {}
+function applyMissionUI(){
+  const b = document.querySelector('.richmenu button[data-act=mission]');
+  if (b) b.classList.toggle('hidden', !missionsOn);
+  const rm = document.querySelector('.richmenu'); if (rm) rm.style.gridTemplateColumns = `repeat(${missionsOn ? 5 : 4},minmax(0,1fr))`;
+}
+function setMissions(on){
+  missionsOn = on; try { localStorage.setItem('maefuen-missions', on ? 'on' : 'off'); } catch(e) {}
+  applyMissionUI(); if (typeof updateMeta === 'function') updateMeta();
+  toast(on ? 'เปิดฟังก์ชันภารกิจแล้ว' : 'ซ่อนฟังก์ชันภารกิจแล้ว');
+  if (on && state.mother && !state.mother.mission) setTimeout(missionOffer, 400);
+}
+/* remote control: the presenter's command changes the setting for every device (Netlify function "config") */
+const REMOTE = /^https?:/.test(location.protocol) && !/claude\.ai$|claudeusercontent/.test(location.hostname);
+let remoteCfg = null;
+async function pollConfig(){
+  if (!REMOTE) return null;
+  try {
+    const r = await fetch(API + '/config', {cache:'no-store'});
+    if (!r.ok) return null;
+    const c = await r.json(); remoteCfg = c;
+    if (typeof c.missions === 'boolean' && c.missions !== missionsOn) { missionsOn = c.missions; applyMissionUI(); if (typeof updateMeta === 'function') updateMeta(); }
+    return c;
+  } catch(e) { return null; }
+}
+async function remoteMissions(on, pinArg){
+  if (!REMOTE || !remoteCfg) { setMissions(on); toast((on ? 'เปิด' : 'ซ่อน') + 'ภารกิจเฉพาะเครื่องนี้ (ยังไม่เชื่อมระบบควบคุมกลาง)'); return; }
+  let pin = pinArg; if (!pin) { try { pin = localStorage.getItem('maefuen-admin-pin'); } catch(e) {} }
+  if (!pin) { toast(`พิมพ์ /maefuen-mission-${on ? 'on' : 'off'} เว้นวรรค แล้วตามด้วยรหัสผู้ดูแล`); return; }
+  let r, d = {};
+  try { r = await fetch(API + '/config', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin, missions: on})}); d = await r.json(); } catch(e) {}
+  if (!r || !r.ok) { if (r && r.status === 401) { try { localStorage.removeItem('maefuen-admin-pin'); } catch(e) {} } toast(d.error || 'เปลี่ยนค่าไม่สำเร็จ ลองใหม่อีกครั้ง'); return; }
+  try { localStorage.setItem('maefuen-admin-pin', pin); } catch(e) {}
+  remoteCfg = d; missionsOn = on; applyMissionUI(); if (typeof updateMeta === 'function') updateMeta();
+  toast(on ? 'เปิดภารกิจให้ทุกเครื่องแล้ว เครื่องอื่นจะเห็นภายใน 20 วินาที' : 'ซ่อนภารกิจจากทุกเครื่องแล้ว เครื่องอื่นจะหายภายใน 20 วินาที');
+  if (on && state.mother && !state.mother.mission) setTimeout(missionOffer, 400);
+}
+function missionDay(m){ return Math.round((today() - parse(m.mission.start)) / DAY) + 1; }
+function missionTasks(m){
+  const p = eligibility(m).daysPP, cs = m.method === 'cs', d = missionDay(m);
+  const pause = m.lastAlertDay === iso(today());
+  const mins = Math.min(30, Math.max(5, Math.round(5 + (p - 1) * (cs ? 0.6 : 1.2))));
+  let move;
+  if (pause) move = 'วันนี้พักก่อน ไม่ต้องออกกำลังกาย เพราะเพิ่งแจ้งอาการ รอแพทย์ติดต่อกลับ';
+  else if (cs && p <= 14) move = `ลุกเดินช้า ๆ รวม ${mins} นาที แบ่งเป็นหลายรอบ หายใจลึก ๆ ประคองแผลเวลาไอหรือจาม ห้ามยกของหนักหรือเกร็งหน้าท้อง`;
+  else if (cs && p <= 42) move = `เดิน ${mins} นาที ยังไม่เล่นท่าบริหารหน้าท้องหนัก ๆ`;
+  else if (p <= 7) move = `เดินช้า ๆ ในบ้าน ${mins} นาที และขมิบช่องคลอด 10 ครั้ง × 3 รอบ`;
+  else if (p <= 42) move = `เดิน ${mins} นาที และขมิบช่องคลอด 10 ครั้ง × 3 รอบ`;
+  else move = `ออกกำลังกายระดับปานกลาง ${mins} นาที (รวมให้ได้สัปดาห์ละ 150 นาที) ถ้าตรวจหลังคลอดแล้วไม่มีปัญหา`;
+  const care = Object.assign({}, CARE[(d - 1) % CARE.length]);
+  if (care.i === '🧘' && cs && p < 30) care.t = 'นั่งหลังตรง ยืดคอและไหล่เบา ๆ 5 นาที ไม่บิดตัว';
+  return [
+    {id:'water', i:'💧', t:'ดื่มน้ำสะอาดให้ได้ราววันละ 3 ลิตร ดื่ม 1 แก้วทุกครั้งที่ให้นม', topic:'น้ำนมน้อย ทำอย่างไรดี'},
+    {id:'move', i: pause ? '⏸️' : '🚶', t: move, topic:'การบริหารร่างกายหลังคลอด'},
+    {id:'care', i: care.i, t: care.t, topic: care.topic},
+    {id:'check', i:'🩺', t:'ตอบเช็กอาการประจำวัน', check:true}];
+}
+const MISSION_SRC = srcBox('WHO 2022 · ACOG 2020 · คู่มือของกรมฯ', 'WHO (2022) แนะนำติดตามหลังคลอดอย่างน้อย 4 ครั้ง: ภายใน 24 ชั่วโมง, 48–72 ชั่วโมง, วันที่ 7–14 และสัปดาห์ที่ 6 ระยะหลังคลอดนับถึง 6 สัปดาห์ (42 วัน)<br>ACOG (2020) แนะนำให้กลับมาออกกำลังกายทีละน้อยเมื่อปลอดภัย ขมิบช่องคลอดเริ่มได้เร็ว และค่อย ๆ เพิ่มจนถึงสัปดาห์ละ 150 นาที ผ่าคลอดหรือมีภาวะแทรกซ้อนอาจต้องใช้เวลานานกว่า<br>น้ำดื่มและอาหารบำรุงน้ำนม: คู่มือของกรมฯ หน้า 137–141<br>ภารกิจนี้เป็นร่างของทีม รอแพทย์ทบทวน');
+function missionOffer(){
+  const m = state.mother; if (!m) return;
+  ask(`อยากเริ่ม "ภารกิจฟื้นตัว" ไหมคะ ทุกวันจะมีภารกิจเล็ก ๆ 4 ข้อ เช่น ดื่มน้ำ เดิน และดูแลตัวเอง ระบบปรับความหนักให้ตามวันหลังคลอดและวิธีคลอด${m.method === 'cs' ? ' (ผ่าคลอดจะค่อยเป็นค่อยไปกว่า)' : ''}\nเลือกความยาว:`,
+    MISSION_LEN.map(x => ({label:`${x.label} · ${x.short}`, fn: () => startMission(x.n)})).concat([{label:'ไว้ทีหลัง', fn: () => bot('ได้ค่ะ แตะปุ่ม "✅ ภารกิจวันนี้" ได้ตลอดนะคะ')}]));
+}
+function startMission(n){
+  const m = state.mother; m.mission = {len:n, start: iso(today()), done:{}};
+  const x = MISSION_LEN.find(y => y.n === n);
+  botHTML(`<b>เริ่มภารกิจฟื้นตัว ${n} วัน</b>\nทำไมต้อง ${n} วัน: ${esc(x.why)}\nทุกวันจะมีการแจ้งเตือนภารกิจใหม่ ถ้าแจ้งอาการไม่สบาย ระบบจะให้พักการออกกำลังกายวันนั้นเอง` + MISSION_SRC);
+  logEvent('เริ่มภารกิจ', `คุณ${m.name} ${n} วัน`);
+  setTimeout(missionCard, 500);
+}
+function missionCard(){
+  const m = state.mother, ms = m.mission, d = missionDay(m);
+  if (d > ms.len) { missionSummary(); return; }
+  const tasks = missionTasks(m), key = String(d);
+  ms.done[key] = ms.done[key] || [];
+  const daysFull = Object.entries(ms.done).filter(([k, v]) => Number(k) < d && v.length >= 4).length;
+  const el = botHTML('', 'mcard');
+  const render = () => {
+    const done = ms.done[key];
+    el.innerHTML = `<b class="mt">✅ ภารกิจวันที่ ${d} จาก ${ms.len}</b><span class="note">วันที่ ${eligibility(m).daysPP} หลังคลอด · ทำครบมาแล้ว ${daysFull} วัน</span>` +
+      `<div class="mbar" role="img" aria-label="ทำวันนี้ ${done.length} จาก 4"><i style="width:${done.length * 25}%"></i></div>` +
+      tasks.map(t => `<div class="mtask ${done.includes(t.id) ? 'done' : ''}"><span aria-hidden="true">${t.i}</span><span class="tx">${esc(t.t)}</span><button type="button" data-id="${t.id}">${done.includes(t.id) ? '✓ ทำแล้ว' : t.check ? 'เช็กเลย' : 'ทำแล้ว'}</button></div>`).join('') +
+      `<p class="mwarn">หยุดทันทีและแจ้งในแชต ถ้าเลือดออกมากขึ้น เวียนหัว เจ็บหน้าอก หรือปวดแผลมากขึ้น</p>` + MISSION_SRC;
+    el.querySelectorAll('button[data-id]').forEach(b => b.addEventListener('click', () => {
+      const id = b.dataset.id; if (done.includes(id)) return;
+      done.push(id); render();
+      if (id === 'check') dailyCheck(true);
+      if (done.length === 4) { bot(`🎉 ครบภารกิจวันที่ ${d} แล้วค่ะ เก่งมาก`); logEvent('ภารกิจครบ', `คุณ${m.name} วันที่ ${d}/${ms.len}`); }
+      if (typeof updateMeta === 'function') updateMeta();
+    }));
+  };
+  render();
+}
+function missionNotify(){
+  const m = state.mother, ms = m.mission, d = missionDay(m);
+  if (d > ms.len) { if (!ms.ended) { ms.ended = true; missionSummary(); } return; }
+  ask(`🔔 ภารกิจวันที่ ${d} จาก ${ms.len} พร้อมแล้วค่ะ`, [{label:'✅ ดูภารกิจวันนี้', fn: missionCard}]);
+}
+function missionSummary(){
+  const m = state.mother, ms = m.mission;
+  const full = Object.values(ms.done).filter(v => v.length >= 4).length;
+  botHTML(`<b>สรุปภารกิจฟื้นตัว ${ms.len} วัน</b>\nทำครบ ${full} จาก ${ms.len} วัน\nช่วงต่อไปออกกำลังกายต่อเนื่องให้ได้สัปดาห์ละ 150 นาที และไปตรวจหลังคลอดตามนัดนะคะ` + MISSION_SRC);
+  logEvent('ภารกิจจบ', `คุณ${m.name} ครบ ${full}/${ms.len} วัน`);
+}
 
 /* ---------- register ---------- */
 $('#rBirth').value = daysAgo(14);
@@ -737,7 +902,7 @@ function authPick(m){
   $$('.auth-pane').forEach(x => x.classList.add('hidden'));
   if (m === 'qr') { $('#authQR').classList.remove('hidden'); drawQR(); let t = 300; clearInterval(qrTick); qrTick = setInterval(() => { t--; $('#qrTimer').textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; if (t <= 0) clearInterval(qrTick); }, 1000); }
   if (m === 'thaid') $('#authThaid').classList.remove('hidden');
-  if (m === 'otp') { $('#authOTP').classList.remove('hidden'); otpCode = String(Math.floor(100000 + Math.random() * 900000)); $('#otpIn').value = ''; toast(`(สาธิต) SMS รหัสคือ ${otpCode}`); }
+  if (m === 'otp') { $('#authOTP').classList.remove('hidden'); otpCode = String(Math.floor(100000 + Math.random() * 900000)); $('#otpIn').value = ''; $('#otpSms').innerHTML = `<span>📩 SMS จำลอง (ในระบบจริงจะส่งเข้าโทรศัพท์)</span><b>${otpCode}</b><button type="button" id="otpFill">ใส่รหัสนี้</button>`; $('#otpFill').addEventListener('click', () => { $('#otpIn').value = otpCode; $('#otpIn').focus(); }); }
   return true;
 }
 $$('.auth-opt').forEach(b => b.addEventListener('click', () => authPick(b.dataset.m)));
@@ -788,6 +953,7 @@ $('#rSave').addEventListener('click', () => {
   refreshPresets('mother');
   $('#rmMe').textContent = 'สิทธิของฉัน';
   bot('ต่อไปทุกเช้าจะถามว่าวันนี้เป็นยังไงบ้างนะคะ ถ้าไม่สบายตรงไหน แตะปุ่ม "ไม่สบายตรงไหน" หรือพิมพ์บอกแบบที่พูดกันปกติได้เลย ไม่ต้องใช้คำทางการแพทย์ค่ะ');
+  if (!busy && missionsOn) setTimeout(missionOffer, 900);
 });
 
 /* ---------- symptom vocabulary + rules ---------- */
@@ -802,14 +968,14 @@ const SYM = {
   wound_pus:{th:'แผลบวมแดงมีหนองหรือแผลแยก', level:'red', kw:['แผลมีหนอง','แผลแยก','แผลบวมแดง','หนองไหล']},
   mild_fever:{th:'มีไข้', level:'yellow', kw:['มีไข้','ตัวรุมๆ','ตัวรุม ๆ','ตัวร้อน']},
   foul_lochia:{th:'น้ำคาวปลามีกลิ่นเหม็น', level:'yellow', kw:['คาวปลาเหม็น','น้ำคาวปลามีกลิ่น','กลิ่นเหม็น']},
-  breast_pain:{th:'เต้านมคัดหรือเจ็บ', level:'yellow', kw:['เต้านมคัด','คัดเต้า','เจ็บเต้า','เต้านมแข็ง','เต้านมอักเสบ','นมคัด','นมแข็ง','เต้าแข็ง','เจ็บนม','นมคัดแข็ง','เต้าบวม']},
+  breast_pain:{th:'เต้านมคัดหรือเจ็บ', level:'yellow', kw:['เต้านมคัด','คัดเต้า','เจ็บเต้า','เต้านมแข็ง','เต้านมอักเสบ','นมคัด','นมแข็ง','เต้าแข็ง','เจ็บนม','นมคัดแข็ง','เต้าบวม','เต้านมบวม','เต้านมแดง','เต้าแดง']},
   wound_pain:{th:'ปวดแผล', level:'yellow', kw:['เจ็บแผล','ปวดแผล','แผลผ่าคลอดเจ็บ','แผลเจ็บ']},
-  low_mood:{th:'อารมณ์เศร้า', level:'yellow', kw:['เศร้า','ร้องไห้','ท้อแท้','หดหู่','เครียดมาก','อยากร้องไห้','ไม่มีความสุข','ใจไม่ดี']},
+  low_mood:{th:'อารมณ์เศร้า', level:'yellow', kw:['เศร้า','ร้องไห้','ท้อแท้','หดหู่','เครียดมาก','อยากร้องไห้','ไม่มีความสุข','ใจไม่ดี','เหงา','ว้าเหว่']},
   insomnia:{th:'นอนไม่หลับ', level:'yellow', kw:['นอนไม่หลับ','นอนไม่ค่อยหลับ']},
   urinary:{th:'ปัสสาวะแสบหรือไม่ออก', level:'yellow', kw:['ปัสสาวะแสบ','ฉี่แสบ','ปัสสาวะไม่ออก','ฉี่ไม่ออก']},
   body_aches:{th:'ปวดเมื่อยตามตัว', level:'green', kw:['ปวดหลัง','ปวดเมื่อย','ปวดตัว','เมื่อยล้า','ปวดเอว','เมื่อยตัว','ปวดขา','ปวดแขน','ปวดไหล่']},
   constipation:{th:'ท้องผูก', level:'green', kw:['ท้องผูก']},
-  uterine_cramp:{th:'ปวดท้องน้อยหลังคลอด', level:'green', kw:['ปวดท้องน้อย','ปวดมดลูก','มดลูกเข้าอู่']},
+  uterine_cramp:{th:'ปวดท้องน้อยหลังคลอด', level:'green', kw:['ปวดท้องน้อย','ปวดมดลูก']},
   mild_headache:{th:'ปวดหัวเล็กน้อย', level:'green', kw:['ปวดหัว','ปวดศีรษะ','เจ็บหัว','มึนหัว']},
   dizzy:{th:'เวียนหัว หน้ามืด', level:'yellow', kw:['เวียนหัว','หน้ามืด','วิงเวียน','จะเป็นลม','บ้านหมุน']},
   fatigue:{th:'ง่วง อ่อนเพลีย นอนไม่พอ', level:'green', kw:['ง่วง','เพลีย','เหนื่อย','นอนไม่พอ','ไม่ได้นอน','อดนอน','อ่อนแรง']},
@@ -874,6 +1040,7 @@ const ADVICE = {
   wound_pain:'ช่วงนี้งดหัตถการบริเวณแผลผ่าตัด ถ้าแผลบวมแดง มีหนอง หรือมีไข้ ให้ไปโรงพยาบาลทันที'
 };
 function respond(tri, syms){
+  if (state.mother && tri.level !== 'green') state.mother.lastAlertDay = iso(today());
   if (tri.level !== 'green') toInbox(lastInput || syms.map(x => SYM[x] ? SYM[x].th : x).join(', '), tri.level, syms.map(x => x).join(', ') + ' → ระดับ' + LEVEL[tri.level].th);
   if (tri.level === 'red') {
     state.redflags++;
@@ -1069,7 +1236,7 @@ function traceKB(item, input){
 function kbAnswer(item){
   const refs = [...new Set(item.src.map(s => s.ref))].join(', ');
   const lvs = [...new Set(item.src.map(s => s.lv))].map(l => `<span class="lv ${l}">${LV[l]}</span>`).join('');
-  botHTML(`${esc(item.a)}<span class="cite">อ้างอิง: ${esc(refs)}</span>${lvs}`);
+  botHTML(`${esc(item.a)}` + srcBox(refs, `${esc(refs)}<div>${lvs}</div>`));
 }
 function helpList(){
   bot('ไปโรงพยาบาลทันที หรือโทร 1669 ถ้ามีอาการเหล่านี้\n• เลือดออกมากจนชุ่มผ้าอนามัยภายใน 1 ชั่วโมง\n• ปวดศีรษะรุนแรง ตาพร่ามัว\n• เจ็บหน้าอก หายใจลำบาก หรือชัก\n• ไข้สูง หนาวสั่น\n• ขาบวมแดงหรือปวดน่องข้างเดียว\n• แผลผ่าตัดบวมแดง มีหนอง\n• มีความคิดอยากทำร้ายตัวเองหรือลูก (โทร 1323 ได้ตลอด 24 ชั่วโมง)');
@@ -1146,7 +1313,7 @@ async function handleText(raw, libItem, noEcho){
     result = await liveClassify(cleaned);
     th.remove();
     engine = 'live';
-    if (!result) { result = keywordClassify(cleaned); note = 'AI ไม่ตอบหรือตอบผิดรูปแบบ จึงใช้ตัวจำแนกคำสำคัญสำรอง'; }
+    if (!result) { result = keywordClassify(cleaned); note = 'AI เรียกไม่สำเร็จ' + (lastAiError ? ` (${lastAiError.status || ''} ${lastAiError.detail})` : '') + ' จึงใช้ตัวจำแนกคำสำคัญสำรอง · พิมพ์ /maefuen-check เพื่อดูสาเหตุ'; }
     else if (aiBackend) note = 'จำแนกโดย Typhoon ผ่านระบบหลังบ้าน' + (lastUsage && lastUsage.total_tokens ? ` · ใช้ ${lastUsage.total_tokens} โทเคน` : '');
   } else {
     await typing(800);
@@ -1154,21 +1321,23 @@ async function handleText(raw, libItem, noEcho){
   }
   const kwRed = keywordClassify(cleaned).symptoms.filter(s => SYM[s].level === 'red' && !result.symptoms.includes(s));
   if (kwRed.length) { result.symptoms = result.symptoms.concat(kwRed); note = (note ? note + ' ' : '') + 'ตาข่ายนิรภัยพบอาการอันตรายเพิ่ม จึงรวมเข้าไปด้วย'; }
+  if (result.symptoms.length && QWORD.test(raw) && result.symptoms.every(x => SYM[x].level === 'green') && topicFor(raw, null)) { if (await kbAnswerMother(raw)) return; }
   if (!result.symptoms.length) {
     if (await kbAnswerMother(raw)) return;
-    const kwItem = findLibKw(raw);
-    if (kwItem) { kbAnswer(kwItem); traceKB(kwItem, raw); state.kb++; logEvent('ถามความรู้', kwItem.q); return; }
     const area = [[/เลือด/, 1], [/แผล|ท้อง/, 3], [/ขา|น่อง/, 5], [/เต้า|หัวนม|นม/, 2], [/😭|😢|😞|เศร้า|ร้องไห้/, 6], [/หัว|ศีรษะ/, 0], [/ร้อน|ไข้/, 4]].find(([re]) => re.test(raw));
+    const kwItem = (area && SYMVERB.test(raw) && !QWORD.test(raw)) ? null : findLibKw(raw);
+    if (kwItem) { kbAnswer(kwItem); traceKB(kwItem, raw); state.kb++; logEvent('ถามความรู้', kwItem.q); return; }
     if (area && /^(ไม่มี|ไม่ได้)/.test(raw.replace(/\s+/g, ''))) { bot('รับทราบค่ะ ดีใจที่ไม่มีอาการนั้นนะคะ 😊 ถ้ามีอะไรผิดปกติ บอกได้ตลอดเลยค่ะ'); return; }
-    if (area) { bot('ขอถามเพิ่มอีกนิดนะคะ จะได้แนะนำได้ถูก'); BODY[area[1]].run(); logEvent('ถามต่อ', raw); return; }
-    if (/ไหม|มั้ย|ยังไง|อย่างไร|ทำไม|เท่าไร|เท่าไหร่|กี่|หรือเปล่า|หรือยัง|\?/.test(raw)) {
+    if (area && SYMVERB.test(raw)) { bot('ขอถามเพิ่มอีกนิดนะคะ จะได้แนะนำได้ถูก'); BODY[area[1]].run(); logEvent('ถามต่อ', raw); return; }
+    if (QWORD.test(raw)) {
       bot('คำถามนี้ยังไม่มีคำตอบสำเร็จรูปค่ะ ส่งให้แพทย์แผนไทยประจำเคสแล้ว แพทย์จะตอบกลับนะคะ', 'yellow');
       toInbox(raw, 'yellow', 'คำถามนอกคลังความรู้ → ส่งให้แพทย์ตอบ');
-      setTimeout(faqAsk, 600);
+      const rel = relatedTopics(raw, 3);
+      if (rel.length) setTimeout(() => ask('ระหว่างรอ หัวข้อเหล่านี้อาจเกี่ยวข้องค่ะ', rel.map(tp => ({label: tp.t, fn: () => kbAnswerMother(tp.t)}))), 500);
     } else {
-      bot('ขอโทษค่ะ ยังไม่แน่ใจว่าหมายถึงอะไร ส่งข้อความนี้ให้เจ้าหน้าที่อ่านแล้วนะคะ', 'yellow');
+      bot('ขอโทษค่ะ ยังไม่แน่ใจว่าหมายถึงอะไร ส่งข้อความนี้ให้เจ้าหน้าที่อ่านไว้แล้วนะคะ', 'yellow');
       toInbox(raw, 'yellow', 'ระบบไม่แน่ใจ → ให้เจ้าหน้าที่อ่าน');
-      setTimeout(bodyPicker, 600);
+      setTimeout(() => ask('ช่วยบอกเพิ่มหน่อยค่ะ เรื่องนี้เป็นแบบไหน', [{label:'🤒 มีอาการไม่สบาย', fn: bodyPicker}, {label:'📖 อยากถามความรู้', fn: faqAsk}, {label:'💬 รอเจ้าหน้าที่ตอบ', fn: () => bot('ได้ค่ะ เจ้าหน้าที่จะตอบกลับในแชตนี้นะคะ')}]), 500);
     }
     traceTriage({input:raw, cleaned, engine, json:result, tri:{level:'yellow', reasons:['ไม่พบอาการในรายการ ความมั่นใจต่ำ จึงส่งให้เจ้าหน้าที่ตรวจ']}, note});
     logEvent('ส่งให้เจ้าหน้าที่', 'ข้อความที่ระบบไม่แน่ใจ');
@@ -1190,9 +1359,65 @@ $('#composer').addEventListener('submit', e => {
   if (cmd === '/maefuen-ai') { setAiMode(true); return; }
   if (cmd === '/maefuen-demo') { setAiMode(false); return; }
   if (cmd === '/maefuen-lib') { openSheet('sheet-library'); return; }
+  if (cmd === '/maefuen-check' || cmd === '/maefuen-status') { runDiag(); return; }
+  const parts = raw.trim().split(/\s+/), c0 = parts[0].toLowerCase();
+  if (c0 === '/maefuen-mission-on' || c0 === '/maefuen-mission-off') { remoteMissions(c0.endsWith('-on'), parts[1]); return; }
+  if (cmd === '/maefuen-admin-forget') { try { localStorage.removeItem('maefuen-admin-pin'); } catch(e) {} toast('ลบรหัสผู้ดูแลออกจากเครื่องนี้แล้ว'); return; }
+  if (cmd === '/maefuen-hide') { $('#diagPanel').classList.add('hidden'); toast('ซ่อนแผงตรวจแล้ว'); return; }
   handleText(raw);
 });
 
+/* ---------- secret: AI connection check (/maefuen-check, /maefuen-hide) ---------- */
+async function runDiag(){
+  const panel = $('#diagPanel'), list = $('#diagList'), sum = $('#diagSum');
+  panel.classList.remove('hidden'); list.innerHTML = ''; sum.className = 'diag-sum'; sum.textContent = 'กำลังตรวจ…';
+  const row = (icon, title, detail, how) => { const li = document.createElement('li'); li.innerHTML = `<b>${icon} ${esc(title)}</b>${detail ? `<span>${detail}</span>` : ''}${how ? `<span class="how">วิธีแก้: ${how}</span>` : ''}`; list.append(li); li.scrollIntoView({block:'nearest'}); return li; };
+  const done = (cls, text) => { sum.className = 'diag-sum ' + cls; sum.textContent = text; };
+  const host = location.hostname || '(ไฟล์ในเครื่อง)';
+  const onClaude = /claude\.ai$/.test(location.hostname) || /claudeusercontent/.test(location.hostname);
+  row('ℹ️', 'หน้าเว็บนี้เปิดจาก', `<code>${esc(location.protocol + '//' + host)}</code>`);
+  if (REMOTE) { const c = await pollConfig();
+    if (!c) row('⚠️', 'ระบบควบคุมกลาง (เปิด/ซ่อนภารกิจ)', 'ไม่พบฟังก์ชัน config', (HOST === 'Cloudflare' ? 'อัปโหลด <code>functions/api/config.js</code> แล้ว deploy ใหม่' : 'อัปโหลด <code>netlify/functions/config.js</code> และ <code>package.json</code> แล้ว deploy'));
+    else if (!c.persist) row('⚠️', 'ระบบควบคุมกลาง', 'ที่เก็บค่ากลางใช้ไม่ได้', HOST === 'Cloudflare' ? 'สร้าง KV namespace แล้วผูกกับโปรเจกต์ที่ Settings → Bindings ชื่อตัวแปร <code>MAEFUEN_KV</code> แล้ว deploy ใหม่' : 'ตรวจว่ามี <code>package.json</code> ที่โฟลเดอร์หลักของ repo แล้ว Trigger deploy');
+    else if (!c.adminReady) row('⚠️', 'ระบบควบคุมกลาง', 'ยังไม่ได้ตั้งรหัสผู้ดูแล', (HOST === 'Cloudflare' ? 'Cloudflare → Settings → Variables and Secrets → เพิ่ม <code>ADMIN_PIN</code> แบบ Secret แล้ว deploy ใหม่' : 'Netlify → Environment variables → เพิ่ม <code>ADMIN_PIN</code> แล้ว Trigger deploy'));
+    else row('✅', 'ระบบควบคุมกลางพร้อม', `ภารกิจตอนนี้: <b>${c.missions ? 'เปิด' : 'ซ่อน'}</b> ทุกเครื่อง${c.updatedAt ? ' · เปลี่ยนล่าสุด ' + esc(new Date(c.updatedAt).toLocaleString('th-TH')) : ''}`); }
+  if (!/^https?:/.test(location.protocol) || onClaude) {
+    row('❌', 'ที่นี่ไม่มีระบบหลังบ้าน', 'Typhoon ทำงานได้เฉพาะเว็บที่ติดตั้งบน Cloudflare Pages (หรือ Netlify) พร้อมฟังก์ชันหลังบ้าน', 'เปิดลิงก์ <code>….pages.dev</code> ของทีมแทน');
+    row(sample ? '✅' : 'ℹ️', 'AI สำรองของ Claude', sample ? 'ใช้ได้ พิมพ์ /maefuen-ai เพื่อเปิด' : 'ไม่มีในหน้านี้');
+    return done('warn', '⚠️ หน้านี้ใช้ Typhoon ไม่ได้ เพราะไม่มีระบบหลังบ้าน');
+  }
+  const t0 = performance.now(); let res, data = {};
+  try { res = await fetch(API + '/ai', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{"task":"ping"}'}); try { data = await res.json(); } catch(e) {} } catch(e) {}
+  const ms = Math.round(performance.now() - t0);
+  if (!res) { row('❌', 'ติดต่อระบบหลังบ้านไม่ได้', 'อินเทอร์เน็ตขัดข้องหรือเว็บยังติดตั้งไม่เสร็จ', 'ตรวจอินเทอร์เน็ต แล้วกดตรวจอีกครั้ง'); return done('bad', '❌ ยังไม่เชื่อม: ติดต่อระบบหลังบ้านไม่ได้'); }
+  if (res.status === 404) { row('❌', 'ไม่พบฟังก์ชันหลังบ้าน (404)', HOST === 'Cloudflare' ? 'Cloudflare ไม่เห็นไฟล์ <code>functions/api/ai.js</code>' : 'Netlify ไม่เห็นไฟล์ <code>netlify/functions/ai.js</code>', HOST === 'Cloudflare' ? 'ตรวจใน GitHub ว่ามีไฟล์ในโฟลเดอร์ <code>functions/api</code> ที่โฟลเดอร์หลักของ repo แล้วกด Retry deployment' : 'ตรวจใน GitHub ว่ามีไฟล์อยู่ในโฟลเดอร์ <code>netlify/functions</code> จริง แล้วกด Trigger deploy'); return done('bad', '❌ ยังไม่เชื่อม: ไม่พบฟังก์ชันหลังบ้าน'); }
+  if (res.status === 403) { row('❌', 'ระบบหลังบ้านปฏิเสธ (403)', `origin ${esc(data.originHost || '')} ไม่ตรงกับ ${esc(data.host || '')}`, 'เปิดเว็บจากลิงก์หลักของ Netlify โดยตรง'); return done('bad', '❌ ยังไม่เชื่อม: ถูกปฏิเสธเพราะเปิดจากโดเมนอื่น'); }
+  row('✅', 'พบฟังก์ชันหลังบ้าน', `ตอบใน ${ms} มิลลิวินาที`);
+  if (res.status === 503 || !data.ok) { row('❌', 'ยังไม่มีกุญแจ TYPHOON_API_KEY', 'ฟังก์ชันทำงานแต่ไม่พบกุญแจ', (HOST === 'Cloudflare' ? 'Cloudflare → โปรเจกต์ → Settings → Variables and Secrets → เพิ่ม <code>TYPHOON_API_KEY</code> แบบ Secret แล้ว Deployments → Retry deployment' : 'Netlify → Environment variables → เพิ่ม <code>TYPHOON_API_KEY</code> แล้ว Trigger deploy')); return done('bad', '❌ ยังไม่เชื่อม: ไม่มีกุญแจ'); }
+  row('✅', 'พบกุญแจในระบบหลังบ้าน', 'ระบบไม่ส่งกุญแจกลับมาที่หน้าเว็บ');
+  let d = {}; const t1 = performance.now();
+  try { const r2 = await fetch(API + '/ai', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{"task":"diag"}'}); d = await r2.json(); } catch(e) {}
+  const ms2 = Math.round(performance.now() - t1);
+  if (d.keyHint) row('ℹ️', 'กุญแจที่ตั้งไว้', `<code>${esc(d.keyHint)}</code> ตรวจว่าตรงกับกุญแจล่าสุดใน playground.opentyphoon.ai`);
+  if (!d.ok) {
+    const adv = {401:'กุญแจผิดหรือถูกลบ สร้างกุญแจใหม่ที่ playground.opentyphoon.ai → API Keys แล้วใส่ใหม่ในตัวแปรลับ และ deploy ใหม่', 403:'กุญแจนี้ไม่มีสิทธิ์ใช้โมเดล ลองสร้างกุญแจใหม่', 404:'ไม่พบโมเดล ตั้งตัวแปร <code>TYPHOON_MODEL</code> เป็นชื่อรุ่นที่เห็นใน Playground แล้ว Trigger deploy', 400:'คำขอไม่ถูกต้อง มักเป็นชื่อโมเดล ตั้ง <code>TYPHOON_MODEL</code> ใหม่', 429:'เรียกถี่เกินโควตาฟรี รอ 1 นาทีแล้วตรวจอีกครั้ง'};
+    row('❌', `เรียก Typhoon ไม่สำเร็จ${d.status ? ' (' + d.status + ')' : ''}`, `โมเดลที่ลอง: <code>${esc((d.modelsTried || []).join(', '))}</code><br>ข้อความจาก Typhoon: ${esc(d.detail || '-')}`, adv[d.status] || (HOST === 'Cloudflare' ? 'ดู Cloudflare → โปรเจกต์ → Functions → Real-time logs' : 'ดู Netlify → Logs → Functions → ai'));
+    return done('bad', '❌ ยังไม่เชื่อม: Typhoon ปฏิเสธคำขอ');
+  }
+  row('✅', 'เรียก Typhoon สำเร็จ', `โมเดล <code>${esc(d.model)}</code> · ${d.ms} มิลลิวินาทีที่ Typhoon (${ms2} รวมทั้งหมด) · ตอบว่า "${esc(d.reply || '')}"`);
+  const test = 'เจ็บหัวคักๆ ตามัวๆ';
+  const c = await aiCall('classify', {text: test, codes: Object.entries(SYM).map(([id, s]) => ({id, th: s.th}))});
+  if (c && c.ok) row(c.symptoms.includes('severe_headache_vision') ? '✅' : '⚠️', 'ทดสอบจำแนกอาการ', `"${test}" → <code>${esc(c.symptoms.join(', ') || 'ไม่พบอาการ')}</code> · ${c.usage && c.usage.total_tokens ? c.usage.total_tokens + ' โทเคน' : ''}`, c.symptoms.includes('severe_headache_vision') ? '' : 'AI อ่านไม่ออก ระบบยังมีตาข่ายนิรภัยคำสำคัญ');
+  else row('⚠️', 'ทดสอบจำแนกอาการไม่ผ่าน', esc(lastAiError ? `${lastAiError.status} ${lastAiError.detail}` : 'ไม่ทราบสาเหตุ'));
+  aiBackend = 'typhoon'; aiMode = true; $('#modeDot').classList.add('on'); $('#modeDot').title = 'AI: Typhoon (' + d.model + ')';
+  row('ℹ️', 'สถานะในหน้าเว็บ', `โหมด AI: เปิด · ข้อผิดพลาดล่าสุด: ${lastAiError ? esc(lastAiError.at + ' ' + lastAiError.status + ' ' + lastAiError.detail) : 'ไม่มี'}`, '');
+  row('ℹ️', 'ข้อความแบบไหนใช้ AI', 'AI ใช้กับข้อความที่พิมพ์เองเรื่องอาการ คำถามที่ไม่ตรงคำสำคัญ และการร่างบันทึก ส่วนการแตะปุ่มตอบใช่/ไม่ใช่ไม่ต้องใช้ AI');
+  done('ok', '✅ เชื่อม AI (Typhoon) สำเร็จ');
+}
+$('#diagClose').addEventListener('click', () => $('#diagPanel').classList.add('hidden'));
+$('#diagRerun').addEventListener('click', runDiag);
+applyMissionUI();
+if (REMOTE) { pollConfig(); setInterval(() => { if (!document.hidden) pollConfig(); }, 20000); }
 window.__maefuenSafety = { classify: t => keywordClassify(t), red: t => redHits(t) };
 /* ---------- doctor safety gate ---------- */
 const PROCS = [
@@ -1398,6 +1623,7 @@ function updateMeta(){
     const r = rightsOf(currentKey);
     const cls = {active:'green', pre:'ai', complete:'green', expired:'red', other:'yellow'}[r.status];
     if (chips) chips.innerHTML += `<span class="pill ${cls}">${r.status === 'complete' ? 'ครบสิทธิ 5/5' : r.why}</span>`;
+    if (missionsOn && currentKey === 'mother' && state.mother && state.mother.mission) { const ms = state.mother.mission; const full = Object.values(ms.done).filter(v => v.length >= 4).length; chips.innerHTML += `<span class="pill ai">ภารกิจ ${full}/${ms.len} วัน</span>`; }
     $('#dSaveVisit').textContent = r.status === 'active' ? 'อนุมัติและบันทึก (นับสิทธิครั้งที่ ' + (r.used + 1) + ')' : 'อนุมัติและบันทึก (นอกสิทธิ)';
   }
 }
@@ -1613,17 +1839,17 @@ const TOPICS = [
     'ใช้ปลายนิ้ว 4 นิ้วกดนวดจากฐานเต้านมเข้าหาหัวนม แล้วนวดวนรอบเต้า ข้างละ 5–10 นาที',
     'ประคบด้วยผ้าชุบน้ำอุ่นหรือลูกประคบอุ่น ๆ ข้างละ 10–15 นาที ลองความร้อนที่ท้องแขนก่อนทุกครั้ง',
     'ช่วยให้น้ำนมไหลดีขึ้น และลดอาการคัดตึงเจ็บเต้า']},
-  {t:'น้ำนมน้อย ทำอย่างไรดี', keys:['นมน้อย','นมไม่พอ','นมไม่มา','นมไม่ไหล','เพิ่มน้ำนม','บำรุงน้ำนม','เรียกน้ำนม'], pages:[137,141], lines:[
+  {t:'น้ำนมน้อย ทำอย่างไรดี', keys:['นมน้อย','นมไม่พอ','นมไม่มา','นมไม่ไหล','เพิ่มน้ำนม','บำรุงน้ำนม','เรียกน้ำนม','น้ำนมน้อย','นมแม่น้อย','นมแม่ไม่พอ','นมน้อยลง','นมไม่ค่อยมา','น้ำนมไม่ค่อยมา','นมไม่ค่อยไหล','ช่วยให้น้ำนม','น้ำนมมาดี','น้ำนมเยอะ','นมเยอะ','นมมาเยอะ'], pages:[137,141], lines:[
     'ให้ลูกดูดนมบ่อย ๆ ยิ่งดูดบ่อย น้ำนมยิ่งมามาก',
     'ดื่มน้ำมาก ๆ อย่างน้อยวันละ 3 ลิตร และกินอาหารให้ครบ 5 หมู่',
     'อาหารพื้นบ้านที่ช่วยเรื่องน้ำนม เช่น แกงเลียงหัวปลี น้ำขิง ผัดกะเพรา ใบแมงลัก',
     'นวดและประคบเต้านมอุ่น ๆ ช่วยให้น้ำนมไหลดีขึ้น']},
-  {t:'ท่าให้นมลูก', keys:['ท่าให้นม','อุ้มให้นม','ให้นมยังไง','ให้นมลูก','นมแม่'], pages:[132,136], lines:[
+  {t:'ท่าให้นมลูก', keys:['ท่าให้นม','อุ้มให้นม','ให้นมยังไง','ให้นมลูก','ประโยชน์นมแม่','ข้อดีนมแม่','เข้าเต้า','ดูดนมไม่ถูก'], pages:[132,136], lines:[
     'ท่าที่นิยม เช่น อุ้มลูกไว้ข้างลำตัวแบบอุ้มลูกฟุตบอล นอนตะแคงหันหน้าเข้าหาลูก หรือเอนตัวแล้วให้ลูกนอนบนอก',
     'ให้ปากลูกตรงกับหัวนม ใช้มือประคองคอและหลังลูก',
     'ถ้าให้นมผิดท่า แม่จะปวดเมื่อยตามตัวได้',
     'นมแม่ช่วยให้มดลูกเข้าอู่เร็ว รูปร่างกลับเร็ว และลูกได้ภูมิต้านทาน']},
-  {t:'การอยู่ไฟ', keys:['อยู่ไฟ','อยู่เดือน','ไฟชุด','ผิงไฟ'], pages:[108,110], lines:[
+  {t:'การอยู่ไฟ', keys:['อยู่ไฟ','อยู่เดือน','ไฟชุด','ผิงไฟ','อยู่ไฟกี่วัน','ต้องอยู่ไฟ'], pages:[108,110], lines:[
     'การอยู่ไฟคือการใช้ความร้อนช่วยให้ร่างกายฟื้นตัวหลังคลอด ทำได้ทั้งแบบนอนผิงกองไฟ และแบบไฟชุดวางบนหน้าท้อง',
     'ช่วยให้มดลูกเข้าอู่เร็ว น้ำคาวปลาไหลดี และน้ำนมไหลดี',
     'ทำให้ปลอดภัย: ไฟอย่าร้อนเกินไป ห้องต้องโปร่ง ลมถ่ายเท กลางคืนนอนพักให้พอ และกินอาหารหลากหลาย ไม่ใช่แค่ข้าวกับเกลือ',
@@ -1660,25 +1886,25 @@ const TOPICS = [
     'กินอาหารให้ครบ 5 หมู่ และดื่มน้ำมาก ๆ อย่างน้อยวันละ 3 ลิตร',
     'อาหารพื้นบ้านที่บำรุงน้ำนม เช่น แกงเลียงหัวปลี น้ำขิง ผัดกะเพรา ใบแมงลัก',
     'ของแสลงแต่ละภาคไม่เหมือนกัน ถ้ากินอะไรแล้วไม่สบายหรือลูกท้องเสีย ให้งดอย่างนั้น']},
-  {t:'ของแสลงหลังคลอด', keys:['แสลง','ห้ามกิน','ของห้าม'], pages:[142,142], lines:[
+  {t:'ของแสลงหลังคลอด', keys:['แสลง','ห้ามกิน','ของห้าม','อาหารแสลง','ของแสลง','กินอะไรไม่ได้','ห้ามกินอะไร','อะไรห้ามกิน'], pages:[142,142], lines:[
     'ของแสลงคืออาหารที่กินแล้วไม่สบาย เช่น น้ำคาวปลาไม่ไหล น้ำนมหยุด ปวดหัว ท้องเสีย หรือทำให้ลูกที่กินนมท้องเสีย',
     'ความเชื่อแต่ละภาคต่างกัน เช่น บางภาคห้ามของดอง ข้าวเหนียว หน่อไม้',
     'หลักง่าย ๆ คือ กินให้ครบ 5 หมู่ ถ้ากินอะไรแล้วไม่สบาย ให้งดอย่างนั้น']},
-  {t:'มดลูกเข้าอู่', keys:['มดลูก','เข้าอู่'], pages:[149,149], lines:[
+  {t:'มดลูกเข้าอู่', keys:['มดลูก','เข้าอู่','มดลูกเข้าอู่'], pages:[149,149], lines:[
     'หลังคลอด มดลูกจะค่อย ๆ หดเล็กลง ใช้เวลาประมาณ 2 สัปดาห์จนคลำทางหน้าท้องไม่ได้',
     'ถ้าเลย 2 สัปดาห์แล้วยังคลำมดลูกได้ หรือปวดมากขึ้น มีไข้ ให้รีบพบแพทย์']},
   {t:'น้ำคาวปลา', keys:['น้ำคาวปลา','คาวปลา'], pages:[150,150], lines:[
     'ช่วง 3 วันแรกจะเป็นสีแดง จากนั้นค่อย ๆ จางเป็นสีน้ำตาลอ่อน หลังวันที่ 10 จะใสหรือเหลืองใส',
     'ส่วนใหญ่หมดภายใน 3 สัปดาห์',
     'ผิดปกติถ้ากลับมาเป็นสีแดงอีก หรือมีกลิ่นเหม็น ต้องรีบพบแพทย์']},
-  {t:'ประจำเดือนและเพศสัมพันธ์', keys:['ประจำเดือน','เมนส์','เพศสัมพันธ์','มีอะไรกับ'], pages:[149,149], lines:[
+  {t:'ประจำเดือนและเพศสัมพันธ์', keys:['ประจำเดือน','เมนส์','เพศสัมพันธ์','มีอะไรกับ','นอนกับสามี','นอนกับแฟน','มีอะไรกับสามี','มีเซ็กส์'], pages:[149,149], lines:[
     'ประจำเดือนมักกลับมาใน 6–8 สัปดาห์ ถ้าให้นมลูกอาจยังไม่มา',
     'การให้นมลูกไม่ได้ช่วยคุมกำเนิด',
     'ควรงดมีเพศสัมพันธ์ 4–6 สัปดาห์หลังคลอด เพราะยังมีน้ำคาวปลาและติดเชื้อง่าย']},
-  {t:'การคุมกำเนิดหลังคลอด', keys:['คุมกำเนิด','ยาคุม','ห่วง','ถุงยาง','ฝังยา'], pages:[150,150], lines:[
+  {t:'การคุมกำเนิดหลังคลอด', keys:['คุมกำเนิด','ยาคุม','ห่วง','ถุงยาง','ฝังยา','ทำหมัน','ยาฝัง','กันท้อง','ป้องกันการตั้งครรภ์'], pages:[150,150], lines:[
     'ทางเลือกที่ไม่กระทบน้ำนม เช่น ถุงยางอนามัย ห่วงอนามัย หรือฮอร์โมนชนิดเดียวที่เริ่มได้ 6 สัปดาห์หลังคลอด',
     'ปรึกษาเจ้าหน้าที่ที่ รพ.สต. หรือโรงพยาบาลเพื่อเลือกวิธีที่เหมาะกับตัวเองค่ะ']},
-  {t:'ทำงานบ้านหลังคลอดได้แค่ไหน', keys:['ทำงาน','งานบ้าน','ยกของ','ขับรถ','ขึ้นบันได','ทำกับข้าว'], pages:[151,151], lines:[
+  {t:'ทำงานบ้านหลังคลอดได้แค่ไหน', keys:['ทำงาน','งานบ้าน','ยกของ','ขับรถ','ขึ้นบันได','ทำกับข้าว','ยกของหนัก','กลับไปทำงาน'], pages:[151,151], lines:[
     '6 สัปดาห์แรก ทำงานเบา ๆ ได้ เช่น ทำกับข้าว กวาดบ้าน แต่อย่ายกของหนัก',
     'ขึ้นลงบันไดได้ แต่ระวังหน้ามืดหกล้ม',
     'ขับรถได้เมื่อแผลหายดี ราว 4 สัปดาห์ถ้าคลอดปกติ หรือ 6 สัปดาห์ถ้าผ่าคลอด']},
@@ -1686,7 +1912,7 @@ const TOPICS = [
     'ช่วงสัปดาห์แรกอาจอารมณ์อ่อนไหว นอนไม่หลับ เบื่อ เหนื่อย มักเป็นมากสุดวันที่ 4–5 และดีขึ้นราววันที่ 10',
     'ให้สามีและคนในบ้านช่วยดูลูก เพื่อให้แม่ได้พัก',
     'ถ้าเศร้าเกือบทุกวันนานกว่านั้น หรือมีความคิดทำร้ายตัวเอง บอกเจ้าหน้าที่หรือโทร 1323 ได้ตลอด 24 ชั่วโมง']},
-  {t:'การบริหารร่างกายหลังคลอด', keys:['กายบริหาร','ออกกำลัง','บริหารร่างกาย','ฤๅษีดัดตน','ฤษีดัดตน','หุ่น'], pages:[142,149], lines:[
+  {t:'การบริหารร่างกายหลังคลอด', keys:['กายบริหาร','ออกกำลัง','บริหารร่างกาย','ฤๅษีดัดตน','ฤษีดัดตน','หุ่น','ออกกำลังกาย','ลดน้ำหนัก','ลดพุง','โยคะ'], pages:[142,149], lines:[
     'คู่มือแนะนำท่าบริหารหลังคลอด เช่น ท่ามณีเวช ฤๅษีดัดตน และการก้าวเต้นเพื่อให้หัวใจแข็งแรง',
     'ถ้าไม่แน่ใจว่าท่าไหนเหมาะกับตัวเอง ถามแพทย์แผนไทยในนัดครั้งถัดไปได้ค่ะ']},
   {t:'ลูกตัวเหลือง', keys:['ตัวเหลือง','ลูกเหลือง','ดีซ่าน'], pages:[152,159], lines:[
@@ -1694,17 +1920,27 @@ const TOPICS = [
     'ถ้าลูกเหลืองมาก ซึม ไม่ค่อยดูดนม ต้องพาไปพบแพทย์ทันที']}
 ];
 function topicFor(q, res){
-  const n = kbNorm(q);
-  let t = TOPICS.find(tp => tp.keys.some(k => n.includes(kbNorm(k))));
-  return t || null;
+  const n = kbNorm(q); let best = null, bestLen = 0;
+  TOPICS.forEach(tp => tp.keys.forEach(k => { const kk = kbNorm(k); if (kk && n.includes(kk) && kk.length > bestLen) { best = tp; bestLen = kk.length; } }));
+  return best;
 }
+function relatedTopics(q, k){
+  const bg = x => { const t = kbNorm(x), o = new Set(); for (let i = 0; i < t.length - 1; i++) o.add(t.slice(i, i + 2)); return o; };
+  const qb = bg(q); if (!qb.size) return [];
+  return TOPICS.map(tp => { const tb = bg(tp.t + tp.keys.join('')); let c = 0; qb.forEach(x => { if (tb.has(x)) c++; }); return {tp, sc: c / qb.size}; })
+    .filter(x => x.sc >= 0.3).sort((a, b) => b.sc - a.sc).slice(0, k || 3).map(x => x.tp);
+}
+const QWORD = /ไหม|มั้ย|ยังไง|อย่างไร|ทำไม|เท่าไร|เท่าไหร่|กี่|หรือเปล่า|หรือยัง|ได้ยัง|อะไร|เมื่อไหร่|เมื่อไร|ไหน|\?/;
+const SYMVERB = /ปวด|เจ็บ|บวม|แดง|คัน|ไหล|ออกมา|ร้อน|แข็ง|คัด|ผิดปกติ|มีอาการ|ชา|แสบ|เวียน|อักเสบ|หนอง|เหม็น/;
+function srcBox(short, detail){ return `<details class="src"><summary>📖 ที่มา: ${esc(short)}</summary><div>${detail}</div></details>`; }
 function topicHTML(tp){
-  return `<b>${esc(tp.t)}</b>\n` + tp.lines.map(l => '• ' + esc(l)).join('\n') + `<span class="cite">สรุปจากคู่มือของกรมการแพทย์แผนไทยฯ (หน้า ${tp.pages[0]}${tp.pages[1] !== tp.pages[0] ? '–' + tp.pages[1] : ''})</span>`;
+  return `<b>${esc(tp.t)}</b>\n` + tp.lines.map(l => '• ' + esc(l)).join('\n') + srcBox(`คู่มือของกรมฯ หน้า ${tp.pages[0]}${tp.pages[1] !== tp.pages[0] ? '–' + tp.pages[1] : ''}`, `คู่มือแนวทางการดูแลสุขภาพมารดาและทารกด้วยการแพทย์แผนไทย กรมการแพทย์แผนไทยและการแพทย์ทางเลือก หน้า ${tp.pages[0]}${tp.pages[1] !== tp.pages[0] ? '–' + tp.pages[1] : ''}<br>ทีมเรียบเรียงเป็นภาษาง่าย อยู่ระหว่างให้แพทย์แผนไทยทบทวน`);
 }
 
 /* mother-side answer: manual + KH only, stricter threshold */
 async function kbAnswerMother(raw){
-  if (/ยา(?!ก)|สมุนไพร.*(กิน|ดื่ม)|(กิน|ดื่ม).*สมุนไพร/.test(raw) && !/อาหาร|ทับหม้อ|ประคบ|อบ/.test(raw)) {
+  const rawMed = raw.replace(/โรงพยาบาล|พยาบาล|ยาว|ยาย/g, '');
+  if (/ยา(?!ก)|สมุนไพร.*(กิน|ดื่ม)|(กิน|ดื่ม).*สมุนไพร/.test(rawMed) && !/อาหาร|ทับหม้อ|ประคบ|อบ|ยาคุม|คุมกำเนิด|ฝังยา|ยาฝัง/.test(rawMed)) {
     bot('เรื่องการใช้ยาและสมุนไพรชนิดรับประทาน ระบบจะไม่แนะนำเองนะคะ เพราะต้องดูร่างกายและยาที่ใช้อยู่ด้วย\nส่งคำถามนี้ให้แพทย์แผนไทยประจำเคสแล้ว แพทย์จะติดต่อกลับค่ะ', 'yellow');
     showTrace(`<li><div class="k">ข้อความเข้า</div><div class="v">${esc(raw)}</div></li><li><div class="k">ตรวจประเภทคำถาม</div><div class="v">เป็นคำถามเรื่องการใช้ยาหรือสมุนไพรชนิดรับประทาน</div></li><li><div class="k">กฎความปลอดภัย</div><div class="v">ระบบไม่แนะนำยาแก่มารดาโดยตรง การสั่งใช้ยาเป็นหน้าที่ของผู้ประกอบวิชาชีพ</div><div style="margin-top:6px"><span class="pill yellow">ส่งให้แพทย์</span></div></li>`);
     logEvent('ส่งให้แพทย์', 'คำถามเรื่องการใช้ยาสมุนไพร: ' + raw);
@@ -1725,7 +1961,7 @@ async function kbAnswerMother(raw){
       if (today() < e.start) personal = `<b>สำหรับคุณ${esc(m.name)}:</b> ตอนนี้${m.method === 'cs' ? 'ผ่าคลอด' : 'คลอด'}ได้ ${e.daysPP} วัน ${tp.t === 'การนวดหลังคลอด' || tp.t === 'การประคบสมุนไพร' ? 'ยังนวดหรือประคบตรงแผลไม่ได้ ' : 'ยังไม่ควรทำ '}เริ่มรับบริการได้ตั้งแต่ ${thDate(e.start)} ค่ะ\n\n`;
       else if (e.canNow) personal = `<b>สำหรับคุณ${esc(m.name)}:</b> ตอนนี้รับบริการได้แล้ว ใช้สิทธิไป ${m.stamps.length} จาก 5 ครั้ง\n\n`;
     }
-    botHTML(personal + (ai ? esc(ai) + `<span class="cite">ที่มา: คู่มือของกรมการแพทย์แผนไทยฯ</span>` : topicHTML(tp)));
+    botHTML(personal + (ai ? esc(ai) + srcBox(`คู่มือของกรมฯ หน้า ${tp.pages[0]}–${tp.pages[1]}`, `คู่มือแนวทางการดูแลสุขภาพมารดาและทารกด้วยการแพทย์แผนไทย หน้า ${tp.pages[0]}–${tp.pages[1]} · AI เรียบเรียงจากข้อความในคู่มือเท่านั้น`) : topicHTML(tp)));
     showTrace(`
       <li><div class="k">ข้อความเข้า</div><div class="v">${esc(raw)}</div><div class="v">ไม่พบอาการในรายการ จึงจัดเป็นคำถามด้านความรู้</div></li>
       <li><div class="k">จับคู่หัวข้อ</div><div class="v">${esc(tp.t)} (คู่มือฯ หน้า ${tp.pages[0]}–${tp.pages[1]})</div></li>
@@ -1810,7 +2046,7 @@ function advance(n, quiet){
     else if (before.canNow && today() > e.end) bot(`สิทธิฟื้นฟูหลังคลอดหมดอายุแล้วค่ะ ใช้ไป ${m.stamps.length} จาก 5 ครั้ง`);
     else if (m.stamps.length >= 5 && n >= 7 && e.daysPP <= 42) bot(`🔔 ติดตามหลังครบสิทธิ (วันที่ ${e.daysPP} หลังคลอด)\nช่วง 6 สัปดาห์แรกยังต้องสังเกตอาการ ถ้ามีอะไรผิดปกติ แตะ "ไม่สบายตรงไหน" ได้เลยค่ะ`);
   }
-  if (!quiet) { toast(`เลื่อนไป ${thDate(today())}`); if (m && m.stamps.length < 5) dailyCheck(false); }
+  if (!quiet) { toast(`เลื่อนไป ${thDate(today())}`); if (m && m.mission && missionsOn) missionNotify(); if (m && m.stamps.length < 5) dailyCheck(false); }
 }
 $('#guideToggle').addEventListener('click', () => { const g = $('.guide'); const o = g.classList.toggle('open'); $('#guideToggle').setAttribute('aria-expanded', o); $('#guideToggle').textContent = (o ? '▾ ' : '▸ ') + 'แถบสาธิตสำหรับผู้นำเสนอ'; });
 $('#traceJump').addEventListener('click', () => $('#trace').scrollIntoView({behavior:'smooth', block:'start'}));
