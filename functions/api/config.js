@@ -2,7 +2,7 @@
 // ค่ากลางที่ผู้ดูแลเปลี่ยนจากระยะไกล (เปิดหรือซ่อนภารกิจให้ทุกเครื่อง) เก็บใน KV ที่ผูกชื่อ MAEFUEN_KV
 // การเปลี่ยนค่าต้องใช้รหัสผู้ดูแลจากตัวแปรลับ ADMIN_PIN
 const json = (code, obj) => new Response(JSON.stringify(obj), { status: code, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
-const defaults = env => ({ missions: env.MISSIONS_DEFAULT === 'on' });
+const defaults = env => ({ missions: env.MISSIONS_DEFAULT === 'on', disabled: false });
 
 export async function onRequestGet({ env }) {
   const kv = env.MAEFUEN_KV;
@@ -18,6 +18,7 @@ export async function onRequestPost({ request, env }) {
   if (!kv) return json(500, { error: 'ยังไม่ได้ผูก KV ชื่อ MAEFUEN_KV กับโปรเจกต์' });
   let cur = {}; try { cur = (await kv.get('config', 'json')) || {}; } catch (e) { cur = {}; }
   if (typeof body.missions === 'boolean') cur.missions = body.missions;
+  if (typeof body.disabled === 'boolean') cur.disabled = body.disabled;
   cur.updatedAt = new Date().toISOString();
   await kv.put('config', JSON.stringify(cur));
   return json(200, Object.assign({}, defaults(env), cur, { persist: true, adminReady: true }));

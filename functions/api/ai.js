@@ -8,10 +8,10 @@ const stripPII = s => clip(s, 1200).replace(/\b\d[\d\s-]{11,16}\d\b/g, '[ตั�
 function firstJson(text) { const m = String(text || '').match(/\{[\s\S]*\}/); if (!m) return null; try { return JSON.parse(m[0]); } catch (e) { return null; } }
 
 let lastModel = null;
-async function callModel(key, model, system, user, maxTokens) {
+async function callModel(key, model, system, user, maxTokens, history) {
   const t0 = Date.now();
   const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model, temperature: 0, max_tokens: maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }) });
+    body: JSON.stringify({ model, temperature: 0, max_tokens: maxTokens, messages: [{ role: 'system', content: system }].concat(history || [], [{ role: 'user', content: user }]) }) });
   const ms = Date.now() - t0;
   if (!res.ok) { let msg = ''; try { const e = await res.json(); msg = (e.error && (e.error.message || e.error)) || e.message || ''; } catch (e) {}
     const err = new Error('typhoon ' + res.status); err.status = res.status; err.detail = String(msg).slice(0, 160); err.ms = ms; err.model = model; throw err; }
@@ -19,12 +19,12 @@ async function callModel(key, model, system, user, maxTokens) {
   return { text: (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '', usage: data.usage || null, ms, model };
 }
 // ถ้าโมเดลถูกปฏิเสธ (400/404/422) ลองรุ่นถัดไปเอง
-async function chat(env, system, user, maxTokens) {
+async function chat(env, system, user, maxTokens, history) {
   const models = [env.TYPHOON_MODEL, 'typhoon-v2.5-30b-a3b-instruct', 'typhoon-v2.1-12b-instruct'].filter(Boolean);
   const order = lastModel && models.includes(lastModel) ? [lastModel].concat(models.filter(m => m !== lastModel)) : models;
   let err = null;
   for (const m of order) {
-    try { const r = await callModel(env.TYPHOON_API_KEY, m, system, user, maxTokens); lastModel = m; return r; }
+    try { const r = await callModel(env.TYPHOON_API_KEY, m, system, user, maxTokens, history); lastModel = m; return r; }
     catch (e) { err = e; if (![400, 404, 422].includes(e.status)) break; }
   }
   throw err;
@@ -52,6 +52,8 @@ export async function onRequestPost({ request, env }) {
   if (limited(request.headers.get('cf-connecting-ip') || 'unknown')) return json(429, { error: 'เรียกถี่เกินไป ลองใหม่อีกครั้งในหนึ่งนาที' });
   let body = {}; try { body = JSON.parse(raw || '{}'); } catch (e) { return json(400, { error: 'bad json' }); }
   const key = env.TYPHOON_API_KEY, task = body.task;
+  // สวิตช์ปิดระบบ: ผู้ดูแลปิดใช้งานไว้ ตอบได้เฉพาะ auth
+  if (task !== 'auth' && env.MAEFUEN_KV) { try { const cfg = await env.MAEFUEN_KV.get('config', 'json'); if (cfg && cfg.disabled) return json(423, { ok: false, disabled: true, error: 'ระบบปิดใช้งานอยู่' }); } catch (e) {} }
   const model0 = env.TYPHOON_MODEL || 'typhoon-v2.5-30b-a3b-instruct';
   if (task === 'ping') return json(key ? 200 : 503, { ok: !!key, model: lastModel || model0 });
   if (task === 'diag') {
@@ -61,8 +63,21 @@ export async function onRequestPost({ request, env }) {
     catch (e) { Object.assign(out, { ok: false, status: e.status || 0, detail: e.detail || String(e.message || e), model: e.model || model0, ms: e.ms || 0 }); }
     return json(200, out);
   }
+  if (task === 'auth') { if (!env.ADMIN_PIN || String(body.pin || '') !== env.ADMIN_PIN) { await new Promise(r => setTimeout(r, 800)); return json(401, { ok: false, error: 'รหัสผู้ดูแลไม่ถูกต้อง' }); } return json(200, { ok: true }); }
   if (!key) return json(503, { error: 'ยังไม่ได้ตั้งค่า TYPHOON_API_KEY' });
   try {
+    if (task === 'chat') {
+      // โหมดยืดหยุ่นและโหมดคุยอิสระ ใช้ได้เมื่อมีรหัสผู้ดูแลเท่านั้น
+      if (!env.ADMIN_PIN || String(body.pin || '') !== env.ADMIN_PIN) return json(401, { ok: false, error: 'ต้องใช้รหัสผู้ดูแล' });
+      const mode = body.mode === 'free' ? 'free' : 'flex';
+      const history = (Array.isArray(body.history) ? body.history : []).slice(-8).map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: stripPII(clip(m.content, 600)) }));
+      const topics = (Array.isArray(body.topics) ? body.topics : []).slice(0, 30).map(t => clip(t.t, 60)).join(', ');
+      const system = mode === 'free' ? 'ตอบเป็นภาษาไทยอย่างสุภาพ ลงท้ายแบบผู้หญิงด้วยค่ะ' : 'คุณคือผู้ช่วยของแม่หลังคลอดชื่อแม่ฟื้น พูดสุภาพแบบผู้หญิง ลงท้ายด้วยค่ะหรือนะคะ คุยเรื่องทั่วไปและให้กำลังใจได้ ตอบสั้นไม่เกิน 4 ประโยค เรื่องสุขภาพให้ตอบเฉพาะความรู้ทั่วไปเกี่ยวกับการดูแลหลังคลอดและการแพทย์แผนไทย โดยอิงหัวข้อที่ให้ ห้ามวินิจฉัยโรค ห้ามแนะนำยา สมุนไพรสำหรับกิน หรือขนาดยา ห้ามแนะนำให้หยุดยา ถ้าถามเรื่องยาหรืออาการผิดปกติ ให้แนะนำปรึกษาแพทย์แผนไทยประจำเคสในแชตนี้ ถ้าฉุกเฉินให้โทร 1669 ถ้าไม่แน่ใจให้บอกตรง ๆ ว่าไม่แน่ใจ' + ' หัวข้อความรู้ที่มี: ' + topics;
+      const r = await chat(env, system, stripPII(clip(body.text, 800)), mode === 'free' ? 700 : 350, history);
+      let text = clip(r.text, 1500), blocked = false;
+      if (mode === 'flex' && /\d+(?:\.\d+)?\s*(?:mg|มก\.?|มิลลิกรัม|กรัม|เม็ด|แคปซูล|ช้อนชา|ช้อนโต๊ะ|ซีซี|cc|ml|มล\.?)|พาราเซตามอล|paracetamol|ibuprofen|ไอบูโพรเฟน|แอสไพริน|aspirin|ยาปฏิชีวนะ|antibiotic/i.test(text)) { text = 'เรื่องยาและขนาดยา ขอให้ถามแพทย์แผนไทยประจำเคสนะคะ ระบบส่งคำถามให้แพทย์แล้วค่ะ'; blocked = true; }
+      return json(200, { ok: true, text, blocked, mode, usage: r.usage, model: r.model });
+    }
     if (task === 'classify') {
       const codes = (Array.isArray(body.codes) ? body.codes : []).slice(0, 40).map(c => ({ id: clip(c.id, 40).replace(/[^a-z_]/g, ''), th: clip(c.th, 60) })).filter(c => c.id);
       const allowed = new Set(codes.map(c => c.id));
